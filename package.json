@@ -1,0 +1,73 @@
+{
+  "name": "razorpay-react-checkout",
+  "version": "1.0.0",
+  "description": "TypeScript-first, SSR-safe React SDK for Razorpay with hooks and Next.js support",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc --declaration",
+    "lint": "eslint src --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"src/**/*.tsx\" \"test/**/*.ts\" \"test/**/*.tsx\"",
+    "test": "vitest",
+    "test:coverage": "vitest --coverage",
+    "prepublishOnly": "npm run build && npm run test && npm run lint",
+    "precommit": "lint-staged"
+  },
+  "keywords": [
+    "razorpay",
+    "react",
+    "sdk",
+    "hooks",
+    "ssr",
+    "nextjs",
+    "typescript"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arsallanShahab/razorpay-react-checkout.git"
+  },
+  "author": "Arsallan Shahab",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/arsallanShahab/razorpay-react-checkout/issues"
+  },
+  "homepage": "https://github.com/arsallanShahab/razorpay-react-checkout#readme",
+  "peerDependencies": {
+    "react": ">=16.8.0",
+    "react-dom": ">=16.8.0"
+  },
+  "devDependencies": {
+    "@testing-library/react": "^14.0.0",
+    "@types/node": "^25.0.3",
+    "@types/react": "^18.0.0",
+    "@types/react-dom": "^18.0.0",
+    "@typescript-eslint/eslint-plugin": "^6.0.0",
+    "@typescript-eslint/parser": "^6.0.0",
+    "@vitest/coverage-v8": "^1.0.0",
+    "eslint": "^8.0.0",
+    "eslint-plugin-react": "^7.33.0",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "husky": "^8.0.0",
+    "jsdom": "^22.0.0",
+    "lint-staged": "^15.0.0",
+    "prettier": "^3.0.0",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^1.0.0"
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

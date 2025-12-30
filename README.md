@@ -1,0 +1,127 @@
+# Razorpay React Checkout
+
+A TypeScript-first, SSR-safe React SDK for Razorpay with hooks and first-class Next.js support.
+
+## Features
+
+- 🔒 **TypeScript First**: Fully typed options and responses.
+- ⚡ **SSR Safe**: Works seamlessly with Next.js and other SSR frameworks.
+- 🎣 **Hooks**: `useRazorpay` hook for easy integration.
+- 📦 **Lightweight**: Minimal dependencies.
+
+## Installation
+
+```bash
+npm install razorpay-react-checkout
+# or
+yarn add razorpay-react-checkout
+# or
+pnpm add razorpay-react-checkout
+```
+
+## Usage
+
+### Using Provider (Recommended)
+
+Wrap your application with `RazorpayProvider` to load the script globally.
+
+```tsx
+import { RazorpayProvider } from 'razorpay-react-checkout';
+
+const App = () => (
+  <RazorpayProvider>
+    <Checkout />
+  </RazorpayProvider>
+);
+```
+
+### Using Hook
+
+```tsx
+import { useRazorpay, RazorpayOptions } from 'razorpay-react-checkout';
+
+const Checkout = () => {
+  const { isLoading, isLoaded, error, openRazorpay } = useRazorpay();
+
+  const handlePayment = () => {
+    const options: RazorpayOptions = {
+      key: 'YOUR_KEY_ID',
+      amount: 50000, // Amount in paise
+      currency: 'INR',
+      name: 'Acme Corp',
+      description: 'Test Transaction',
+      image: 'https://example.com/your_logo',
+      order_id: 'order_9A33XWu170g81s', // Generate order_id on server
+      handler: (response) => {
+        alert(response.razorpay_payment_id);
+        alert(response.razorpay_order_id);
+        alert(response.razorpay_signature);
+      },
+      prefill: {
+        name: 'John Doe',
+        email: 'youremail@example.com',
+        contact: '9999999999',
+      },
+      notes: {
+        address: 'Razorpay Corporate Office',
+      },
+      theme: {
+        color: '#3399cc',
+      },
+    };
+
+    const rzp = openRazorpay(options);
+
+    if (rzp) {
+      rzp.on('payment.failed', function (response: any) {
+        alert(response.error.code);
+        alert(response.error.description);
+        alert(response.error.source);
+        alert(response.error.step);
+        alert(response.error.reason);
+        alert(response.error.metadata.order_id);
+        alert(response.error.metadata.payment_id);
+      });
+    }
+  };
+
+  if (isLoading) {
+    return <div>Loading Razorpay SDK...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading Razorpay SDK</div>;
+  }
+
+  return (
+    <div>
+      <h1>Razorpay React Checkout Example</h1>
+      <button onClick={handlePayment} disabled={!isLoaded}>
+        Pay Now
+      </button>
+    </div>
+  );
+};
+
+export default App;
+```
+
+### Next.js Usage
+
+The SDK is SSR-safe out of the box. You can use it in your Next.js pages or components without any special configuration. The script is loaded lazily on the client side when the hook is used.
+
+## API
+
+### `useRazorpay`
+
+Returns an object with the following properties:
+
+- `isLoaded`: `boolean` - Indicates if the Razorpay SDK script has loaded.
+- `isLoading`: `boolean` - Indicates if the Razorpay SDK script is currently loading.
+- `error`: `Error | null` - Error object if the script failed to load.
+- `Razorpay`: `RazorpayConstructor | null` - The raw Razorpay constructor (available on `window`).
+- `openRazorpay`: `(options: RazorpayOptions) => RazorpayInstance | null` - Helper function to initialize and open the checkout.
+
+## License
+
+MIT
