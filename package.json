@@ -1,6 +1,6 @@
 {
   "name": "razorpay-react-checkout",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "TypeScript-first, SSR-safe React SDK for Razorpay with hooks and Next.js support",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -42,6 +42,10 @@
     "url": "https://github.com/arsallanShahab/razorpay-react-checkout/issues"
   },
   "homepage": "https://github.com/arsallanShahab/razorpay-react-checkout#readme",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org"
+  },
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"

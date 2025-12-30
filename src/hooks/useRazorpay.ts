@@ -29,6 +29,7 @@ export const useRazorpay = () => {
     isLoading,
     error,
     Razorpay: typeof window !== 'undefined' ? window.Razorpay : null,
+    defaultOptions: undefined,
   };
 
   const openRazorpay = useCallback(
@@ -38,11 +39,17 @@ export const useRazorpay = () => {
         return null;
       }
 
-      const rzp = new state.Razorpay(options);
+      // Merge default options with provided options
+      const mergedOptions = {
+        ...state.defaultOptions,
+        ...options,
+      } as RazorpayOptions;
+
+      const rzp = new state.Razorpay(mergedOptions);
       rzp.open();
       return rzp;
     },
-    [state.Razorpay]
+    [state.Razorpay, state.defaultOptions]
   );
 
   return { ...state, openRazorpay };
