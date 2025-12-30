@@ -1,5 +1,10 @@
 ## Release Notes
 
+### v1.1.1
+
+- **Docs**: Updated README with examples for default options feature
+- Improved documentation for better developer experience
+
 ### v1.1.0
 
 - **New Feature**: Support for default options in `RazorpayProvider`

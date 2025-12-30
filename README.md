@@ -35,6 +35,41 @@ const App = () => (
 );
 ```
 
+#### With Default Options (v1.1.0+)
+
+Pass default Razorpay options to the provider. These options will be merged with options passed to `openRazorpay()`.
+
+```tsx
+import { RazorpayProvider } from 'razorpay-react-checkout';
+
+const App = () => (
+  <RazorpayProvider
+    options={{
+      key: 'rzp_test_xxxxxxxx',
+      amount: 50000,
+      currency: 'INR',
+      name: 'Acme Corp',
+    }}
+  >
+    <Checkout />
+  </RazorpayProvider>
+);
+```
+
+Then in your component, you only need to pass the handler:
+
+```tsx
+const { openRazorpay } = useRazorpay();
+
+const handlePayment = () => {
+  openRazorpay({
+    handler: (response) => {
+      console.log('Payment successful:', response);
+    },
+  });
+};
+```
+
 ### Using Hook
 
 ```tsx
