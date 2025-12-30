@@ -1,7 +1,7 @@
 {
   "name": "razorpay-react-checkout",
-  "version": "1.1.1",
-  "description": "TypeScript-first, SSR-safe React SDK for Razorpay with hooks and Next.js support",
+  "version": "1.1.2",
+  "description": "TypeScript-first, SSR-safe React SDK for Razorpay with hooks, Next.js support, and seamless integration for modern web applications. Designed for developers seeking simplicity and performance.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -73,5 +73,12 @@
   "engines": {
     "node": ">=16.0.0",
     "npm": ">=8.0.0"
-  }
+  },
+  "contributors": [
+    {
+      "name": "Arsallan Shahab",
+      "email": "marsallan@proton.me",
+      "url": "https://github.com/arsallanShahab"
+    }
+  ]
 }
