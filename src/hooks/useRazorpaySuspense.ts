@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useRazorpayContext } from '../components/RazorpayProvider';
 import { loadRazorpayScript } from '../lib/script-loader';
 import {
   RazorpayOptions,
@@ -6,44 +6,57 @@ import {
   RazorpaySuccessResponse,
   RazorpayErrorResponse,
 } from '../types';
-import { useRazorpayContext } from '../components/RazorpayProvider';
+import { useCallback, useMemo } from 'react';
 
-export const useRazorpay = () => {
-  const context = useRazorpayContext();
+// Simple cache for promise to avoid infinite loops if not careful
+let scriptLoadPromise: Promise<boolean> | null = null;
+let scriptLoaded = false;
+let scriptError: Error | null = null;
 
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [isLoading, setIsLoading] = useState(true);
-  const [error, setError] = useState<Error | null>(null);
-
-  useEffect(() => {
-    if (context) return;
-
-    loadRazorpayScript()
-      .then((loaded) => {
-        setIsLoaded(loaded);
-        setIsLoading(false);
+const getScriptPromise = () => {
+  if (scriptLoaded) return true;
+  if (scriptError) throw scriptError;
+  if (!scriptLoadPromise) {
+    scriptLoadPromise = loadRazorpayScript()
+      .then((res) => {
+        scriptLoaded = res;
+        return res;
       })
       .catch((err) => {
-        setError(err);
-        setIsLoading(false);
+        scriptError = err;
+        throw err;
       });
-  }, [context]);
+  }
+  return scriptLoadPromise;
+};
+
+export const useRazorpaySuspense = () => {
+  const context = useRazorpayContext();
+
+  if (context) {
+    if (context.error) throw context.error;
+    if (context.isLoading && !context.isLoaded) {
+      throw getScriptPromise();
+    }
+  } else {
+    // No provider, stand alone usage
+    const result = getScriptPromise();
+    if (result instanceof Promise) throw result;
+  }
 
   const state = useMemo(
     () =>
       context || {
-        isLoaded,
-        isLoading,
-        error,
+        isLoaded: true,
+        isLoading: false,
+        error: null,
         Razorpay: typeof window !== 'undefined' ? window.Razorpay : null,
         defaultOptions: undefined,
         onPaymentSuccess: () => {},
         onPaymentError: () => {},
-        registerPaymentSuccess: () => () => {},
-        registerPaymentError: () => () => {},
         debug: false,
       },
-    [context, isLoaded, isLoading, error]
+    [context]
   );
 
   const openRazorpay = useCallback(
@@ -54,13 +67,11 @@ export const useRazorpay = () => {
         return null;
       }
 
-      // Merge default options with provided options
       const mergedOptions = {
         ...state.defaultOptions,
         ...options,
       } as RazorpayOptions;
 
-      // Handle Success Callback
       const originalHandler = mergedOptions.handler;
       mergedOptions.handler = (response: RazorpaySuccessResponse) => {
         // eslint-disable-next-line no-console
@@ -73,7 +84,6 @@ export const useRazorpay = () => {
       if (state.debug) console.log('[Razorpay SDK] Opening Checkout', mergedOptions);
       const rzp = new state.Razorpay(mergedOptions);
 
-      // Handle Error Callback
       rzp.on('payment.failed', (response: RazorpayErrorResponse) => {
         // eslint-disable-next-line no-console
         if (state.debug) console.error('[Razorpay SDK] Payment Failed', response);
@@ -86,5 +96,5 @@ export const useRazorpay = () => {
     [state]
   );
 
-  return { ...state, openRazorpay };
+  return { openRazorpay, Razorpay: state.Razorpay };
 };

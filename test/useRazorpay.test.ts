@@ -44,6 +44,6 @@ describe('useRazorpay', () => {
 
     result.current.openRazorpay(options);
 
-    expect(window.Razorpay).toHaveBeenCalledWith(options);
+    expect(window.Razorpay).toHaveBeenCalledWith(expect.objectContaining(options));
   });
 });

@@ -141,6 +141,79 @@ const Checkout = () => {
 export default App;
 ```
 
+### Helper Components (v1.2.0+)
+
+#### `<RazorpayButton />`
+
+A simple button that handles the loading state and click handler for you.
+
+```tsx
+import { RazorpayButton } from 'razorpay-react-checkout';
+
+const App = () => (
+  <RazorpayButton
+    options={{
+      key: 'YOUR_KEY_ID',
+      amount: 50000,
+      currency: 'INR',
+      name: 'Acme Corp',
+    }}
+    onSuccess={(data) => console.log('Success', data)}
+    onFailure={(data) => console.error('Failure', data)}
+    onClick={() => console.log('Button clicked!')}
+  >
+    Pay Now
+  </RazorpayButton>
+);
+```
+
+#### `<RazorpayListener />`
+
+Listen to payment events globally from any component.
+
+```tsx
+import { RazorpayListener } from 'razorpay-react-checkout';
+
+const AnalyticsTracker = () => (
+  <RazorpayListener
+    onPaymentSuccess={(data) => track('Payment Success', data)}
+    onPaymentError={(data) => track('Payment Error', data)}
+  />
+);
+```
+
+### Global Event Handling & Debugging
+
+You can now handle events globally at the Provider level and enable debug logs.
+
+```tsx
+<RazorpayProvider 
+  debug={true}
+  onPaymentSuccess={(data) => console.log('Global Success', data)}
+  onPaymentError={(data) => console.error('Global Error', data)}
+>
+  <App />
+</RazorpayProvider>
+```
+
+### Using React Suspense
+
+Use `useRazorpaySuspense` to leverage React Suspense loading boundaries.
+
+```tsx
+import { useRazorpaySuspense } from 'razorpay-react-checkout';
+
+const Checkout = () => {
+  const { openRazorpay } = useRazorpaySuspense();
+  return <button onClick={() => openRazorpay({...})}>Pay</button>;
+};
+
+// ...
+<Suspense fallback={<Spinner />}>
+  <Checkout />
+</Suspense>
+```
+
 ### Next.js Usage
 
 The SDK is SSR-safe out of the box. You can use it in your Next.js pages or components without any special configuration. The script is loaded lazily on the client side when the hook is used.
