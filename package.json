@@ -21,7 +21,8 @@
     "test": "vitest",
     "test:coverage": "vitest --coverage",
     "prepublishOnly": "npm run build && npm run test && npm run lint",
-    "precommit": "lint-staged"
+    "precommit": "lint-staged",
+    "release": "standard-version"
   },
   "keywords": [
     "razorpay",
@@ -36,7 +37,10 @@
     "type": "git",
     "url": "git+https://github.com/arsallanShahab/razorpay-react-checkout.git"
   },
-  "author": "Arsallan Shahab",
+  "author": {
+    "name": "Arsallan Shahab",
+    "url": "https://github.com/arsallanShahab"
+  },
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/arsallanShahab/razorpay-react-checkout/issues"
@@ -67,6 +71,7 @@
     "prettier": "^3.0.0",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
+    "standard-version": "^9.5.0",
     "typescript": "^5.0.0",
     "vitest": "^1.0.0"
   },
