@@ -1,3 +1,5 @@
+import { RazorpayErrorCodes } from './enums';
+
 /**
  * Formats a currency amount.
  *
@@ -17,4 +19,37 @@ export const formatAmount = (amount: number): number => {
  */
 export const isPaise = (amount: number): boolean => {
   return Number.isInteger(amount);
+};
+
+/**
+ * Parses a Razorpay error object and returns a human-readable message.
+ *
+ * @param error - The error object returned by Razorpay payment.failed event.
+ * @returns A user-friendly error message string.
+ */
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const getReadableErrorMessage = (error: any): string => {
+  if (!error) return 'An unknown error occurred.';
+
+  // Handle standard Razorpay error structure
+  if (error.code && error.description) {
+    // Prioritize description if it's user-friendly enough, or map based on code.
+    // Usually description is like "Payment failed due to..."
+    switch (error.code) {
+      case RazorpayErrorCodes.BAD_REQUEST_ERROR:
+        return error.description || 'Invalid request. Please check your payment details.';
+      case RazorpayErrorCodes.GATEWAY_ERROR:
+        return 'Payment processing failed due to a gateway error. Please try again.';
+      case 'PAYMENT_CANCELLED': // Common scenario
+        return 'Payment was cancelled by the user.';
+      default:
+        return error.description || 'Payment failed. Please try again.';
+    }
+  }
+
+  // Handle if it's just a string or minimal object
+  if (typeof error === 'string') return error;
+  if (error.message) return error.message;
+
+  return 'Payment could not be completed. Please try again.';
 };

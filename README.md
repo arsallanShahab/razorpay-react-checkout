@@ -230,6 +230,57 @@ Returns an object with the following properties:
 - `Razorpay`: `RazorpayConstructor | null` - The raw Razorpay constructor (available on `window`).
 - `openRazorpay`: `(options: RazorpayOptions) => RazorpayInstance | null` - Helper function to initialize and open the checkout.
 
+### Server-Side Utilities (New!)
+
+Verify Razorpay signatures easily on your backend (Next.js API routes, Express, etc.).
+
+```ts
+import { verifySignature } from 'razorpay-react-checkout/server';
+
+// In your API route
+const isValid = verifySignature({
+  order_id: 'order_123',
+  payment_id: 'pay_123',
+  signature: 'sig_123'
+}, process.env.RAZORPAY_KEY_SECRET);
+
+if (isValid) {
+  // Signature verified
+}
+```
+
+### Better Error Handling
+
+Parse cryptic Razorpay error objects into user-friendly messages.
+
+```tsx
+import { getReadableErrorMessage, RazorpayEvents, RazorpayErrorCodes } from 'razorpay-react-checkout';
+
+// ...
+rzp.on(RazorpayEvents.PAYMENT_FAILED, (response) => {
+  const message = getReadableErrorMessage(response.error);
+  toast.error(message);
+  
+  if (response.error.code === RazorpayErrorCodes.BAD_REQUEST_ERROR) {
+    // Handle specific error
+  }
+});
+```
+
+### Enhanced Button Component
+
+Now supports variants and Tailwind classes!
+
+```tsx
+<RazorpayButton 
+  options={...} 
+  variant="primary" // primary, secondary, outline, ghost, danger
+  className="w-full"
+>
+  Pae Now
+</RazorpayButton>
+```
+
 ## License
 
 MIT

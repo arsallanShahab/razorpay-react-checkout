@@ -1,5 +1,23 @@
 ## Release Notes
 
+### v1.3.0 - 2026-01-01
+
+- **Server-Side Verification**:
+  - Added `verifySignature` utility exported from `razorpay-react-checkout/server`.
+  - securely verify payment signatures on your backend (Node.js/Next.js API).
+
+- **Standardized Enums**:
+  - Exported `RazorpayEvents` (e.g., `PAYMENT_FAILED`, `PAYMENT_CAPTURED`) for type-safe event listening.
+  - Exported `RazorpayErrorCodes` (e.g., `BAD_REQUEST_ERROR`, `GATEWAY_ERROR`) for handling specific errors.
+
+- **Error Parsing**:
+  - Added `getReadableErrorMessage(error)` utility to convert complex Razorpay error objects into user-friendly strings.
+
+- **UI Enhancements**:
+  - `RazorpayButton`: Added support for `variant` prop (`primary`, `secondary`, `outline`, `ghost`, `danger`).
+  - `RazorpayButton`: Added `className` support with `tailwind-merge` for easy styling overrides.
+
+
 ### v1.2.0 - 2025-12-31
 
 - **New Components**:
