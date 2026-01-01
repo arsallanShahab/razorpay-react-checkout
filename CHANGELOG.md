@@ -1,6 +1,13 @@
 # 🚀 Changelog
 
 All notable changes to this project will be documented in this file.
+## [1.3.0](https://github.com/arsallanShahab/razorpay-react-checkout/compare/v1.2.0...v1.3.0) (2026-01-01)
+
+
+### ✨ New Features
+
+* add server-side utilities for signature verification, enhance error handling, and improve RazorpayButton component with variants and Tailwind support ([68b9211](https://github.com/arsallanShahab/razorpay-react-checkout/commit/68b9211752a975261b129694846c756a20152bc1))
+
 ## [1.2.0](https://github.com/arsallanShahab/razorpay-react-checkout/compare/v1.1.2...v1.2.0) (2025-12-31)
 
 
