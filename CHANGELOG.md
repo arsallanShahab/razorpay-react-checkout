@@ -1,6 +1,13 @@
 # 🚀 Changelog
 
 All notable changes to this project will be documented in this file.
+### [1.3.1](https://github.com/arsallanShahab/razorpay-react-checkout/compare/v1.3.0...v1.3.1) (2026-01-03)
+
+
+### 👷 Build System
+
+* Migrate build process to tsup and update module output paths. ([5a04b2b](https://github.com/arsallanShahab/razorpay-react-checkout/commit/5a04b2ba16ca1bb1b85a9353813d782ee61a80a1))
+
 ## [1.3.0](https://github.com/arsallanShahab/razorpay-react-checkout/compare/v1.2.0...v1.3.0) (2026-01-01)
 
 
