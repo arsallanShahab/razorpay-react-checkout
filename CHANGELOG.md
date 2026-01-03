@@ -1,6 +1,13 @@
 # 🚀 Changelog
 
 All notable changes to this project will be documented in this file.
+### [1.3.2](https://github.com/arsallanShahab/razorpay-react-checkout/compare/v1.3.1...v1.3.2) (2026-01-03)
+
+
+### 🐛 Bug Fixes
+
+* correct export statement for types in index.ts ([54f1cf4](https://github.com/arsallanShahab/razorpay-react-checkout/commit/54f1cf454ca1184c1a829af1e85ec400588e3515))
+
 ### [1.3.1](https://github.com/arsallanShahab/razorpay-react-checkout/compare/v1.3.0...v1.3.1) (2026-01-03)
 
 
