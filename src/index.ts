@@ -1,4 +1,4 @@
-export * from './types';
+export type * from './types';
 export * from './hooks/useRazorpay';
 export * from './hooks/useRazorpaySuspense';
 export * from './components/RazorpayProvider';
